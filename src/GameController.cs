@@ -14,7 +14,11 @@ using SwinGameSDK;
 /// </summary>
 public static class GameController
 {
+<<<<<<< HEAD
     //rs
+=======
+    //rsrs
+>>>>>>> master
 	private static BattleShipsGame _theGame;
 	private static Player _human;
 
@@ -68,29 +72,34 @@ public static class GameController
 	/// </remarks>
 	public static void StartGame()
 	{
-		if (_theGame != null)
-			EndGame();
 
-		//Create the game
-		_theGame = new BattleShipsGame();
+        if (_theGame != null)
+            EndGame();
+        //Create the game
+        _theGame = new BattleShipsGame();
 
-		//create the players
-		switch (_aiSetting) {
+
+        //create the players
+        switch (_aiSetting) {
 			case AIOption.Medium:
 				_ai = new AIMediumPlayer(_theGame);
+                Console.WriteLine("Medium");
 				break;
 			case AIOption.Hard:
 				_ai = new AIHardPlayer(_theGame);
-				break;
+                Console.WriteLine("Medium");
+                break;
 			default:
-				_ai = new AIHardPlayer(_theGame);
+				_ai = new AIMediumPlayer(_theGame);
 				break;
 		}
+        
 
 		_human = new Player(_theGame);
 
-		//AddHandler _human.PlayerGrid.Changed, AddressOf GridChanged
-		_ai.PlayerGrid.Changed += GridChanged;
+        //uncommenting line bellow did not cause an error and did not cause a noticeable change to functionality
+        //AddHandler _human.PlayerGrid.Changed, AddressOf GridChanged
+        _ai.PlayerGrid.Changed += GridChanged;
 		_theGame.AttackCompleted += AttackCompleted;
 
 		AddNewState(GameState.Deploying);
@@ -102,8 +111,9 @@ public static class GameController
 
 	private static void EndGame()
 	{
-		//RemoveHandler _human.PlayerGrid.Changed, AddressOf GridChanged
-		_ai.PlayerGrid.Changed -= GridChanged;
+        //uncommenting line bellow did not cause an error and did not cause a noticeable change to functionality
+        //RemoveHandler _human.PlayerGrid.Changed, AddressOf GridChanged
+        _ai.PlayerGrid.Changed -= GridChanged;
 		_theGame.AttackCompleted -= AttackCompleted;
 	}
 
@@ -221,7 +231,7 @@ public static class GameController
 	/// </remarks>
 	public static void Attack(int row, int col)
 	{
-		AttackResult result = default(AttackResult);
+		var result = default(AttackResult);
 		result = _theGame.Shoot(row, col);
 		CheckAttackResult(result);
 	}
@@ -234,7 +244,7 @@ public static class GameController
 	/// </remarks>
 	private static void AIAttack()
 	{
-		AttackResult result = default(AttackResult);
+		var result = default(AttackResult);
 		result = _theGame.Player.Attack();
 		CheckAttackResult(result);
 	}
